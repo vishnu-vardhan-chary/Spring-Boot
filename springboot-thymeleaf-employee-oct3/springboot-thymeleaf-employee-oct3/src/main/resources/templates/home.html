@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function searchByName() {
+		document.frm.action="searchByName";
+		document.frm.submit();
+	}
+	function searchByAddress() {
+		document.frm.action="searchByAddress";
+		document.frm.submit();
+	}
+	function searchBySalary() {
+		document.frm.action="searchBySalary";
+		document.frm.submit();
+	}
+</script>
+</head>
+<body>
+	<h1>Employee Management System</h1>
+	<table border="1" width="100%">
+		<tr>
+			<td colspan="6">
+				<table width="100%">
+						<tr>
+							<td align="left"><a th:href="@{/addEmployee}">Add Employee</a></td>
+							<td align="right"><a th:href="@{/logout}">Sign-out</a></td>
+						</tr>
+					</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="6">
+				<form name="frm" method="post">
+					<table>
+						<tr>
+							<td>Name:</td>
+							<td><input size="10" name="emp_name" /></td>
+							<td><input type="button" value="Search" onClick="searchByName()" /></td>
+							<td>Address:</td>
+							<td><input size="10" name="emp_address" /></td>
+							<td><input type="button" value="Search" onClick="searchByAddress()" /></td>
+							<td>Salary:</td>
+							<td><input type="number" size="10" name="emp_salary"></td>
+							<td><input type="button" value="Search" onClick="searchBySalary()" /></td>
+						</tr>
+					</table>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Salary</th>
+			<th>Edit Action</th>
+			<th>Delete Action</th>
+		</tr>
+		<tr th:if="${employees.size() == 0}">
+			<td colspan="6" align="left">No more Employeess!!!</td>
+		</tr>
+
+		<tr th:each="employee : ${employees}">
+			<td th:text="${employee.id}"></td>
+			<td th:text="${employee.name}"></td>
+			<td th:text="${employee.address}"></td>
+			<td th:text="${employee.salary}"></td>
+			<td><a th:href="@{/editEmployee/{id}(id=${employee.id})}">Edit</a></td>
+			<td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
+		</tr>
+	</table>
+</body>
+</html>
